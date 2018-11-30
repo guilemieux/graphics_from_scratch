@@ -1,3 +1,4 @@
 main
 *.bmp
 .vscode
+main.c
