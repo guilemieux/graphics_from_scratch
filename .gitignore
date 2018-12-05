@@ -1,4 +1,5 @@
-main
+main*
 *.bmp
-.vscode
-main.c
+.vscode/
+bin/
+obj/
