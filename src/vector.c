@@ -41,7 +41,7 @@ Vector_t Vector_add(Vector_t u, Vector_t v)
     return Vector_new(u->x + v->x, u->y + v->y, u->z + v->z);
 }
 
-Vector_t Vector_unary_minus(Vector_t v)
+Vector_t Vector_minus(Vector_t v)
 {
     return Vector_new(-1 * v->x, -1 * v->y, -1 * v->z);
 }
@@ -56,7 +56,7 @@ double Vector_norm(Vector_t v)
     return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
-double Vector_dot_product(Vector_t a, Vector_t b)
+double Vector_dot(Vector_t a, Vector_t b)
 {
     return a->x * b->x + a->y * b->y + a->z * b->z;
 }

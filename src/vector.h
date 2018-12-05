@@ -28,7 +28,7 @@ extern T Vector_add(T u, T v);
 
 /* Returns a new vector which is the unary minus of the given vector.
  * The unary minus is equivalent to multiplying the vector by (-1, -1, -1). */
-extern T Vector_unary_minus(T v);
+extern T Vector_minus(T v);
 
 /* Returns a new vector representing the result of the scalar
  * multiplication a * v. */
@@ -38,7 +38,7 @@ extern T Vector_scale(T v, double a);
 extern double Vector_norm(T v);
 
 /* Returns the dot product of 2 vectors */
-extern double Vector_dot_product(T a, T b);
+extern double Vector_dot(T a, T b);
 
 /* Returns a new vector representing the result of 
  * the cross product of two 3d vectors */

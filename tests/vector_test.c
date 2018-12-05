@@ -49,7 +49,7 @@ bool test_Vector_norm()
     return false;
 }
 
-bool test_Vector_dot_product()
+bool test_Vector_dot()
 {
     Vector_t u, v;
     double dot_product, expected_dot_product;
@@ -58,9 +58,9 @@ bool test_Vector_dot_product()
     u = Vector_new(1.0, 3.0, -5.0);
     v = Vector_new(4.0, -2.0, -1.0);
     expected_dot_product = 3.0;
-    dot_product = Vector_dot_product(u, v);
+    dot_product = Vector_dot(u, v);
     if (dot_product != expected_dot_product) {
-        printf("FAILED: Vector_dot_product: expected %f, got %f\n",
+        printf("FAILED: Vector_dot: expected %f, got %f\n",
                 expected_dot_product, dot_product);
         test_failed = true;
     }
@@ -124,7 +124,7 @@ bool test_Vector_to_string()
 int main(void)
 {
     bool norm_test = test_Vector_norm();
-    bool dot_test = test_Vector_dot_product();
+    bool dot_test = test_Vector_dot();
     bool tostring_test = test_Vector_to_string();
 
     if (norm_test && dot_test && tostring_test) {
