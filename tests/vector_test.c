@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../src/vector.h"
 
 bool test_Vector2d_norm()
@@ -144,15 +145,114 @@ bool test_Vector3d_dot_product()
     return false;
 }
 
+bool test_Vector2d_to_string()
+{
+    char expected_str_rep[VEC_TO_STRING_LEN];
+    char str_rep[VEC_TO_STRING_LEN];
+    Vector2d_t v;
+    bool test_failed = false;
+
+    // Padding zeros
+    v = Vector2d_new(-1000.12, 10000000.1);
+    sprintf(expected_str_rep, "(-1000.120, 10000000.100)");
+    Vector2d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector2d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector2d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    // Rounding
+    v = Vector2d_new(0.9999, 0.0);
+    sprintf(expected_str_rep, "(1.000, 0.000)");
+    Vector2d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector2d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector2d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    // Rounding with 5
+    v = Vector2d_new(0.0005, -0.0005);
+    sprintf(expected_str_rep, "(0.001, -0.001)");
+    Vector2d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector2d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector2d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    if (!test_failed) {
+        printf("Passed: Vector2d_to_string\n");
+        return true;
+    }
+    return false;
+}
+
+bool test_Vector3d_to_string()
+{
+    char expected_str_rep[VEC_TO_STRING_LEN];
+    char str_rep[VEC_TO_STRING_LEN];
+    Vector3d_t v;
+    bool test_failed = false;
+
+    // Padding zeros
+    v = Vector3d_new(-1.0, 1.0, 2.01);
+    sprintf(expected_str_rep, "(-1.000, 1.000, 2.010)");
+    Vector3d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector3d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector3d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    // Rounding
+    v = Vector3d_new(0.9999, 0.0, 0.0);
+    sprintf(expected_str_rep, "(1.000, 0.000, 0.000)");
+    Vector3d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector3d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector3d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    // Rounding with 5
+    v = Vector3d_new(0.0005, -0.0005, 0.0);
+    sprintf(expected_str_rep, "(0.001, -0.001, 0.000)");
+    Vector3d_to_string(v, str_rep, VEC_TO_STRING_LEN);
+    Vector3d_free(v);
+    if (strcmp(str_rep, expected_str_rep) != 0) {
+        printf("FAILED: Vector3d_to_string: expected %s, got %s\n",
+                expected_str_rep, str_rep);
+        test_failed = true;
+    }
+
+    if (!test_failed) {
+        printf("Passed: Vector3d_to_string\n");
+        return true;
+    }
+    return false;
+}
+
 int main(void)
 {
     bool norm2d_test = test_Vector2d_norm();
     bool norm3d_test = test_Vector3d_norm();
     bool dot2d_test = test_Vector2d_dot_product();
     bool dot3d_test = test_Vector3d_dot_product();
+    bool tostring2d_test = test_Vector2d_to_string();
+    bool tostring3d_test = test_Vector3d_to_string();
+
     if (norm2d_test && norm3d_test
-            && dot2d_test && dot3d_test) {
+            && dot2d_test && dot3d_test
+            && tostring2d_test && tostring3d_test) {
         printf("All vector tests passed!\n");
     }
+
     return 0;
 }

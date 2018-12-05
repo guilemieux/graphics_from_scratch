@@ -37,9 +37,9 @@ void Vector2d_free(Vector2d_t v)
     free(v);
 }
 
-void Vector2d_print(Vector2d_t v)
+void Vector2d_to_string(Vector2d_t v, char *s, size_t max_len)
 {
-    printf("(%f, %f)", v->x, v->y);
+    snprintf(s, max_len, "(%.3f, %.3f)", v->x, v->y);
 }
 
 Vector2d_t Vector2d_add(Vector2d_t u, Vector2d_t v)
@@ -82,9 +82,9 @@ void Vector3d_free(Vector3d_t v)
     free(v);
 }
 
-void Vector3d_print(Vector3d_t v)
+void Vector3d_to_string(Vector3d_t v, char *s, size_t max_len)
 {
-    printf("(%f, %f, %f)", v->x, v->y, v->z);
+    snprintf(s, max_len, "(%.3f, %.3f, %.3f)", v->x, v->y, v->z);
 }
 
 Vector3d_t Vector3d_add(Vector3d_t u, Vector3d_t v)
