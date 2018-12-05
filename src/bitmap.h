@@ -21,4 +21,5 @@ extern Pixel_t Bitmap_get_pixel(T bitmap, uint16_t row, uint16_t col);
 extern void Bitmap_set_pixel(T bitmap, Pixel_t pixel, uint16_t row, uint16_t col);
 
 #undef T
+
 #endif
