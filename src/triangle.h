@@ -5,7 +5,7 @@
 
 typedef struct T *T;
 
-extern T Triangle_new(Vector3d_t a, Vector3d_t b, Vector3d_t c);
+extern T Triangle_new(Vector_t a, Vector_t b, Vector_t c);
 extern void Triangle_free(T t);
 extern double Triangle_area(T t);
 

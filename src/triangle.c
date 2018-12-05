@@ -5,12 +5,12 @@
 #define T Triangle_t
 
 struct T {
-    Vector3d_t a;
-    Vector3d_t b;
-    Vector3d_t c;
+    Vector_t a;
+    Vector_t b;
+    Vector_t c;
 };
 
-T Triangle_new(Vector3d_t a, Vector2d_t b, Vector2d_t c)
+T Triangle_new(Vector_t a, Vector_t b, Vector_t c)
 {
     T t = malloc(sizeof(struct T));
     if (t == NULL) {
@@ -30,5 +30,21 @@ void Triangle_free(T t)
 
 double Triangle_area(T t)
 {
-    return 0.0;
+    Vector_t a = t->a;
+    Vector_t b = t->b;
+    Vector_t c = t->c;
+
+    Vector_t minus_a = Vector_minus(a);
+    Vector_t b_minus_a = Vector_add(b, minus_a);
+    Vector_t c_minus_a = Vector_add(c, minus_a);
+    Vector_t cross = Vector_cross(b_minus_a, c_minus_a);
+
+    double area = 0.5 * Vector_norm(cross);
+
+    Vector_free(minus_a);
+    Vector_free(b_minus_a);
+    Vector_free(c_minus_a);
+    Vector_free(cross);
+    
+    return area;
 }
