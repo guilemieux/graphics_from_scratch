@@ -1,3 +1,9 @@
+run: vector_test
+	@echo ""
+	@echo "Running Tests"
+	@echo ""
+	@bin/vector_test
+
 # Vector_test
 vector_test: vector_test.o vector.o
 	gcc -o bin/vector_test obj/vector_test.o obj/vector.o

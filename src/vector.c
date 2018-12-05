@@ -26,7 +26,7 @@ struct Vector3d_t {
 /* 2D VECTOR ***********************************/
 Vector2d_t Vector2d_new(double x, double y)
 {
-    Vector2d_t v = malloc(sizeof(Vector2d_t));
+    Vector2d_t v = malloc(sizeof(struct Vector2d_t));
     v->x = x;
     v->y = y;
     return v;
@@ -64,13 +64,13 @@ double Vector2d_norm(Vector2d_t v)
 
 double Vector2d_dot_product(Vector2d_t a, Vector2d_t b)
 {
-    return a->x * b->x + a->y + b->y;
+    return a->x * b->x + a->y * b->y;
 }
 
 /* 3D VECTOR ***********************************/ 
 Vector3d_t Vector3d_new(double x, double y, double z)
 {
-    Vector3d_t v = malloc(sizeof(Vector3d_t));
+    Vector3d_t v = malloc(sizeof(struct Vector3d_t));
     v->x = x;
     v->y = y;
     v->z = z;
