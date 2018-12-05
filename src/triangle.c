@@ -35,17 +35,7 @@ double Triangle_area(T t)
     Vector_t b = t->b;
     Vector_t c = t->c;
 
-    Vector_t minus_a = Vector_minus(a);
-    Vector_t b_minus_a = Vector_add(b, minus_a);
-    Vector_t c_minus_a = Vector_add(c, minus_a);
-    Vector_t cross = Vector_cross(b_minus_a, c_minus_a);
-
-    double area = 0.5 * Vector_norm(cross);
-
-    Vector_free(minus_a);
-    Vector_free(b_minus_a);
-    Vector_free(c_minus_a);
-    Vector_free(cross);
-
-    return area;
+    Vector_t b_minus_a = Vector_add(b, Vector_neg(a));
+    Vector_t c_minus_a = Vector_add(c, Vector_neg(a));
+    return 0.5 * Vector_norm(Vector_cross(b_minus_a, c_minus_a));
 }

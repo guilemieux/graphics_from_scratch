@@ -18,13 +18,11 @@ bool test_Vector_norm()
                 expected_norm, norm);
         test_failed = true;
     }
-    Vector_free(v);
 
     // Test negative vector
     v = Vector_new(-2.0, -11.0, 10.0);
     expected_norm = 15.0;
     norm = Vector_norm(v);
-    Vector_free(v);
     if (norm != expected_norm) {
         printf("FAILED: Vector_norm: expected %f, got %f\n",
                 expected_norm, norm);
@@ -35,7 +33,6 @@ bool test_Vector_norm()
     v = Vector_new(0.0, 0.0, 0.0);
     expected_norm = 0.0;
     norm = Vector_norm(v);
-    Vector_free(v);
     if (norm != expected_norm) {
         printf("FAILED: Vector_norm: expected %f, got %f\n",
                 expected_norm, norm);
@@ -64,8 +61,6 @@ bool test_Vector_dot()
                 expected_dot_product, dot_product);
         test_failed = true;
     }
-    Vector_free(u);
-    Vector_free(v);
 
     if (!test_failed) {
         printf("Passed: Vector_dot_product\n");
@@ -85,7 +80,6 @@ bool test_Vector_to_string()
     v = Vector_new(-1.0, 1.0, 2.01);
     sprintf(expected_str_rep, "(-1.000, 1.000, 2.010)");
     Vector_to_string(v, str_rep, VEC_TO_STRING_LEN);
-    Vector_free(v);
     if (strcmp(str_rep, expected_str_rep) != 0) {
         printf("FAILED: Vector_to_string: expected %s, got %s\n",
                 expected_str_rep, str_rep);
@@ -96,7 +90,6 @@ bool test_Vector_to_string()
     v = Vector_new(0.9999, 0.0, 0.0);
     sprintf(expected_str_rep, "(1.000, 0.000, 0.000)");
     Vector_to_string(v, str_rep, VEC_TO_STRING_LEN);
-    Vector_free(v);
     if (strcmp(str_rep, expected_str_rep) != 0) {
         printf("FAILED: Vector_to_string: expected %s, got %s\n",
                 expected_str_rep, str_rep);
@@ -107,7 +100,6 @@ bool test_Vector_to_string()
     v = Vector_new(0.0005, -0.0005, 0.0);
     sprintf(expected_str_rep, "(0.001, -0.001, 0.000)");
     Vector_to_string(v, str_rep, VEC_TO_STRING_LEN);
-    Vector_free(v);
     if (strcmp(str_rep, expected_str_rep) != 0) {
         printf("FAILED: Vector_to_string: expected %s, got %s\n",
                 expected_str_rep, str_rep);

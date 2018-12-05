@@ -16,9 +16,6 @@ bool test_area()
                 expected, area);
         return false;
     }
-    Vector_free(a);
-    Vector_free(b);
-    Vector_free(c);
     Triangle_free(t);
     return true;
 }

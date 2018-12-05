@@ -5,45 +5,42 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-#define T Vector_t
-
 /* Recomended size of the buffer for the to_string methods */
 #define VEC_TO_STRING_LEN 64
 
-typedef struct T *T;
+typedef struct vector {
+    double x;
+    double y;
+    double z;
+} Vector_t;
 
-/* Creation and destruction of 3d vectors */
-extern T Vector_new(double x, double y, double z);
-extern void Vector_free(T v);
-
+extern Vector_t Vector_new(double x, double y, double z);
 
 /* Puts a representation of a 3d vector in a string. The format of the 
  * output string is "(-1.234, 5.678, -9.012)". To be sure the string contains
  * the full representation of the vector, pass a string of size
  * VEC_TO_STRING_LEN. */
-extern void Vector_to_string(T v, char *s, size_t max_len);
+extern void Vector_to_string(Vector_t v, char *s, size_t max_len);
 
 /* Returns a new vector which is the result of the addition of 2 vectors */
-extern T Vector_add(T u, T v);
+extern Vector_t Vector_add(Vector_t a, Vector_t b);
 
 /* Returns a new vector which is the unary minus of the given vector.
  * The unary minus is equivalent to multiplying the vector by (-1, -1, -1). */
-extern T Vector_minus(T v);
+extern Vector_t Vector_neg(Vector_t v);
 
 /* Returns a new vector representing the result of the scalar
  * multiplication a * v. */
-extern T Vector_scale(T v, double a);
+extern Vector_t Vector_scale(Vector_t v, double c);
 
 /* Returns the norm of a 3d vector. ||v|| = sqrt(x^2 + y^2 + z^2) */
-extern double Vector_norm(T v);
+extern double Vector_norm(Vector_t v);
 
 /* Returns the dot product of 2 vectors */
-extern double Vector_dot(T a, T b);
+extern double Vector_dot(Vector_t a, Vector_t b);
 
 /* Returns a new vector representing the result of 
  * the cross product of two 3d vectors */
-extern T Vector_cross(T a, T b);
-
-#undef T
+extern Vector_t Vector_cross(Vector_t a, Vector_t b);
 
 #endif
