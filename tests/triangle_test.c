@@ -16,7 +16,6 @@ bool test_area()
                 expected, area);
         return false;
     }
-    Triangle_free(t);
     return true;
 }
 
