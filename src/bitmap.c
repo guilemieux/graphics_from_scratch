@@ -28,7 +28,7 @@ bool cell_exists(T bm, uint16_t row, uint16_t col)
 
 T Bitmap_new(uint16_t width, uint16_t height)
 {
-    T bm = malloc(sizeof(T));
+    T bm = malloc(sizeof(struct T));
     bm->width = width;
     bm->height = height;
     bm->pixels = malloc(height * sizeof(Pixel_t *));
