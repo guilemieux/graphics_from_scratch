@@ -1,4 +1,4 @@
-run: vector_test triangle_test
+test: vector_test triangle_test
 	@echo ""
 	@echo "Running Vector Tests"
 	@bin/vector_test
