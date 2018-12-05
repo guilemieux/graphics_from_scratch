@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "vector.h"
 
 struct Vector2d_t {
@@ -56,6 +57,16 @@ Vector2d_t Vector2d_scale(Vector2d_t v, double a)
     return Vector2d_new(a * v->x, a * v->y);
 }
 
+double Vector2d_norm(Vector2d_t v)
+{
+    return sqrt(v->x * v->x + v->y * v->y);
+}
+
+double Vector2d_dot_product(Vector2d_t a, Vector2d_t b)
+{
+    return a->x * b->x + a->y + b->y;
+}
+
 /* 3D VECTOR ***********************************/ 
 Vector3d_t Vector3d_new(double x, double y, double z)
 {
@@ -89,4 +100,14 @@ Vector3d_t Vector3d_unary_minus(Vector3d_t v)
 Vector3d_t Vector3d_scale(Vector3d_t v, double a)
 {
     return Vector3d_new(a * v->x, a * v->y, a * v->z);
+}
+
+double Vector3d_norm(Vector3d_t v)
+{
+    return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+}
+
+double Vector3d_dot_product(Vector3d_t a, Vector3d_t b)
+{
+    return a->x * b->x + a->y * b->y + a->z * b->z;
 }
