@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "triangle.h"
 #include "vector.h"
 
 #define T Triangle_t
@@ -45,6 +46,6 @@ double Triangle_area(T t)
     Vector_free(b_minus_a);
     Vector_free(c_minus_a);
     Vector_free(cross);
-    
+
     return area;
 }

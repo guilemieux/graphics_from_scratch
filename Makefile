@@ -1,8 +1,16 @@
-run: vector_test
+run: vector_test triangle_test
 	@echo ""
-	@echo "Running Tests"
-	@echo ""
+	@echo "Running Vector Tests"
 	@bin/vector_test
+	@echo ""
+	@echo "Running Triangle Tests"
+	@bin/triangle_test
+
+# Triangle_test
+triangle_test: triangle_test.o triangle.o vector.o
+	gcc -o bin/triangle_test obj/triangle_test.o obj/triangle.o obj/vector.o
+triangle_test.o: tests/triangle_test.c src/triangle.h
+	gcc -c tests/triangle_test.c -o obj/triangle_test.o
 
 # Vector_test
 vector_test: vector_test.o vector.o
@@ -17,6 +25,10 @@ bmp.o: src/bmp.c src/bmp.h
 	gcc -c src/bmp.c -o obj/bmp.o
 pixel.o: src/pixel.c src/pixel.h
 	gcc -c src/pixel.c -o obj/pixel.o
+scene.o: src/scene.c src/scene.h
+	gcc -c src/scene.c src/scene.h
+triangle.o: src/triangle.c src/triangle.h
+	gcc -c src/triangle.c -o obj/triangle.o
 vector.o: src/vector.c src/vector.h
 	gcc -c src/vector.c -o obj/vector.o
 

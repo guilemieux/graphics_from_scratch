@@ -2,8 +2,8 @@
  * vector.h
  * Guillaume Lemieux
  */
-#ifndef VECTOR_H_
-#define VECTOR_H_
+#ifndef _VECTOR_H_
+#define _VECTOR_H_
 
 #define T Vector_t
 
@@ -45,4 +45,5 @@ extern double Vector_dot(T a, T b);
 extern T Vector_cross(T a, T b);
 
 #undef T
+
 #endif
