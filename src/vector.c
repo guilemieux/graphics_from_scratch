@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "vector.h"
+#include "../includes/vector.h"
 
 Vector_t Vector_new(double x, double y, double z)
 {
@@ -57,4 +57,9 @@ Vector_t Vector_cross(Vector_t a, Vector_t b)
         .y = a.z * b.x - a.x * b.z,
         .z = a.x * b.y - a.y * b.x,
     };
+}
+
+Vector_t Vector_unit(Vector_t v)
+{
+    return Vector_scale(v, 1.0 / Vector_norm(v));
 }

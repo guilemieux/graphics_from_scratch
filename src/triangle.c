@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "triangle.h"
-#include "vector.h"
+#include "../includes/triangle.h"
+#include "../includes/vector.h"
 
 Triangle_t Triangle_new(Vector_t a, Vector_t b, Vector_t c)
 {

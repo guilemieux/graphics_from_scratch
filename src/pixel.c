@@ -9,10 +9,10 @@
 Pixel_t Pixel_new()
 {
     return (Pixel_t) {
-        .r = MAX_COLOR;
-        .g = MAX_COLOR;
-        .b = MAX_COLOR;
-        .alpha = MAX_OPACITY;
+        .r = MAX_COLOR,
+        .g = MAX_COLOR,
+        .b = MAX_COLOR,
+        .alpha = MAX_OPACITY
     };
 }
 

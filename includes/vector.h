@@ -1,7 +1,5 @@
-/*
- * vector.h
- * Guillaume Lemieux
- */
+#include <stdlib.h>
+
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
@@ -42,5 +40,9 @@ extern double Vector_dot(Vector_t a, Vector_t b);
 /* Returns a new vector representing the result of 
  * the cross product of two 3d vectors */
 extern Vector_t Vector_cross(Vector_t a, Vector_t b);
+
+/* Returns a vector that has a norm of 1 in the direction of 
+ * the given vector */
+extern Vector_t Vector_unit(Vector_t v);
 
 #endif
