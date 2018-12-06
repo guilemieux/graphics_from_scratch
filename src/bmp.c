@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "bmp.h"
-#include "bitmap.h"
+#include "../includes/bmp.h"
+#include "../includes/image.h"
 
 #define BMP_MAGIC_ID 0x4D42
 #define BYTES_PER_PIXEL 3
@@ -62,9 +62,9 @@ void write_dib_header(struct dib_header *dib_h, FILE *fp)
 
 void write_pixel(Pixel_t pixel, FILE *fp)
 {
-    fputc(Pixel_get_blue(pixel), fp);
-    fputc(Pixel_get_green(pixel), fp);
-    fputc(Pixel_get_red(pixel), fp);
+    fputc(pixel.b, fp);
+    fputc(pixel.g, fp);
+    fputc(pixel.r, fp);
 }
 
 void write_row_padding(int padding_size, FILE *fp)
@@ -73,15 +73,14 @@ void write_row_padding(int padding_size, FILE *fp)
         fputc(0, fp);
 }
 
-/*  */
-void write_pixel_array(Bitmap_t bitmap, FILE *fp)
+void write_pixel_matrix(Image_t image, FILE *fp)
 {
-    int padding_size = Bitmap_get_width(bitmap) % 4;
-    for (int row = Bitmap_get_height(bitmap) - 1; row >= 0; row--) {
-        for (int col = 0; col < Bitmap_get_width(bitmap); col++) {
-            write_pixel(Bitmap_get_pixel(bitmap, row, col), fp);
+    int h = Image_get_height(image), w = Image_get_width(image);
+    int padding_size = w % 4;
+    for (int row = 0; row < h; row--) {
+        for (int col = 0; col < w; col++) {
+            write_pixel(Image_get_pixel(image, row, col), fp);
         }
-
         // Add padding to the end of the row
         for (int i = 0; i < padding_size; i++) fputc(0, fp);
     }
@@ -90,11 +89,11 @@ void write_pixel_array(Bitmap_t bitmap, FILE *fp)
 /************************************************
  * INTERFACE IMPLEMENTATIONS
  ***********************************************/
-void save_to_bmp(Bitmap_t bitmap, char *file_name)
+void save_to_bmp(Image_t img, char *file_name)
 {
     int bits_per_pixel = BYTES_PER_PIXEL * BITS_PER_BYTE;
-    int row_size = ((bits_per_pixel * Bitmap_get_width(bitmap) + 31) / 32) * 4;
-    int pixel_array_size = row_size * Bitmap_get_height(bitmap);
+    int row_size = ((bits_per_pixel * Image_get_width(img) + 31) / 32) * 4;
+    int pixel_array_size = row_size * Image_get_height(img);
     
     // Create bmp_header
     struct bmp_header bmp_h;
@@ -107,8 +106,8 @@ void save_to_bmp(Bitmap_t bitmap, char *file_name)
     // Create dib_header
     struct dib_header dib_h;
     dib_h.size = DIB_HEADER_SIZE;
-    dib_h.width = Bitmap_get_width(bitmap);
-    dib_h.height = Bitmap_get_height(bitmap);
+    dib_h.width = Image_get_width(img);
+    dib_h.height = Image_get_height(img);
     dib_h.color_planes = 1;
     dib_h.bits_per_pixel = bits_per_pixel;
     dib_h.compression = COMPRESSION;
@@ -122,6 +121,6 @@ void save_to_bmp(Bitmap_t bitmap, char *file_name)
     FILE *bmp_file = fopen(file_name, "wb");
     write_bmp_header(&bmp_h, bmp_file);
     write_dib_header(&dib_h, bmp_file);
-    write_pixel_array(bitmap, bmp_file);
+    write_pixel_matrix(img, bmp_file);
     fclose(bmp_file);
 }
