@@ -3,9 +3,6 @@
 #include <stdint.h>
 #include "../includes/pixel.h"
 
-#define MAX_COLOR 255
-#define MAX_OPACITY 255
-
 Pixel_t Pixel_new()
 {
     return (Pixel_t) {

@@ -1,6 +1,9 @@
 #ifndef _PIXEL_H_
 #define _PIXEL_H_
 
+#define MAX_COLOR 255
+#define MAX_OPACITY 255
+
 typedef struct pixel {
     int r;
     int g;

@@ -21,7 +21,7 @@ MAIN_DEPS = $(addprefix $(INC_DIR)/, scene.h triangle.h vector.h)
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c $(MAIN_DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-SCENE_DEPS = $(addprefix $(INC_DIR)/, matrix.h scene.h triangle.h vector.h)
+SCENE_DEPS = $(addprefix $(INC_DIR)/, image.h matrix.h pixel.h scene.h triangle.h vector.h)
 $(OBJ_DIR)/scene.o: $(SRC_DIR)/scene.c $(SCENE_DEPS)
 	$(CC) $(CFLAGS) -c $< -o $@
 

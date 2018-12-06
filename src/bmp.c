@@ -77,7 +77,7 @@ void write_pixel_matrix(Image_t image, FILE *fp)
 {
     int h = Image_get_height(image), w = Image_get_width(image);
     int padding_size = w % 4;
-    for (int row = 0; row < h; row--) {
+    for (int row = 0; row < h; row++) {
         for (int col = 0; col < w; col++) {
             write_pixel(Image_get_pixel(image, row, col), fp);
         }

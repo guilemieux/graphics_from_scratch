@@ -1,13 +1,15 @@
-#include <stdio.h> // tmp
-
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "../includes/image.h"
 #include "../includes/matrix.h"
+#include "../includes/pixel.h"
 #include "../includes/scene.h"
 #include "../includes/triangle.h"
 #include "../includes/vector.h"
 
 #define INIT_SIZE 10
+#define DEFAULT_RES 128
 
 typedef struct ray {
     Vector_t pos;
@@ -50,6 +52,7 @@ Vector_t get_pixel_pos(Scene_t s, int x, int y)
     } else {
         u_x = -1;
     }
+    // TODO: Make the function do the real computation
     Vector_t u = Vector_unit(Vector_new(0, 1, 0));
     Vector_t v = Vector_unit(Vector_cross(w, u));
     
@@ -69,8 +72,7 @@ Ray_t get_ray(Scene_t s, Vector_t pixel_pos)
 {
     Vector_t e = get_eye_pos(s);
     return (Ray_t) {
-        .pos = e,
-        .dir = Vector_add(pixel_pos, Vector_neg(e))
+        .pos = e, .dir = Vector_add(pixel_pos, Vector_neg(e))
     };
 }
 
@@ -107,7 +109,7 @@ bool ray_hits_triangle(Ray_t r, Triangle_t tri, double t0, double t1)
     beta_upper.x[1][0] = tri.a.y - r.pos.y;
     beta_upper.x[2][0] = tri.a.z - r.pos.z;
     double beta = Matrix_det(beta_upper) / det_A;
-    if (beta < 0 || 1 < beta) return false;
+    if (beta < 0 || 1 - gamma < beta) return false;
     return true;
 }
 
@@ -117,13 +119,13 @@ bool ray_hits_triangle(Ray_t r, Triangle_t tri, double t0, double t1)
 Scene_t Scene_new()
 {
     Scene_t s = malloc(sizeof(struct Scene_t));
-    s->cam_pos = Vector_scale(Vector_unit(Vector_new(1.0, 0.0, 0.0)), 10.0);
+    s->cam_pos = Vector_scale(Vector_unit(Vector_new(1.0, 0.0, 0.0)), 5.0);
     s->cam_dir = Vector_unit(Vector_neg(s->cam_pos));
     s->camera = (Camera_t) {
-        .x_res = 60,
-        .y_res = 60,
-        .pixel_size = 0.03,
-        .focal_length = 100
+        .x_res = DEFAULT_RES,
+        .y_res = DEFAULT_RES,
+        .pixel_size = 0.04,
+        .focal_length = 1
     };
     s->count = 0;
     s->size = INIT_SIZE;
@@ -145,44 +147,67 @@ void Scene_add_triangle(Scene_t s, Triangle_t t)
     }
     s->triangles[s->count] = t;
     s->count++;
+} 
+
+void Scene_set_camera_pos(Scene_t s, Vector_t pos)
+{
+    s->cam_pos = pos;
 }
 
-void Scene_take_picture(Scene_t s)
+void Scene_set_camera_dir(Scene_t s, Vector_t dir)
+{
+    s->cam_dir = dir;
+}
+
+void Scene_set_camera_res(Scene_t s, int x_res, int y_res)
+{
+    // Get size of sensor before update
+    double h = s->camera.y_res * s->camera.pixel_size;
+    double w = s->camera.x_res * s->camera.pixel_size;
+    double sensor_size = sqrt(h * h + w * w);
+    
+    // Update resolution
+    s->camera.x_res = x_res;
+    s->camera.y_res = y_res;
+
+    // Update pixels size to keep the same sensor size
+    Scene_set_camera_sensor_size(s, sensor_size);
+}
+
+void Scene_set_camera_sensor_size(Scene_t s, double size)
+{
+    double r = (double) s->camera.y_res / (double) s->camera.x_res;
+    double sensor_width = r * sqrt(1.0 / (r * r + 1));
+    s->camera.pixel_size = sensor_width / s->camera.x_res;
+}
+
+void Scene_take_picture(Scene_t s, Image_t img)
 {
     int n_rows = s->camera.x_res;
     int n_cols = s->camera.y_res;
 
-    bool image[60][60];
-    for (int i = 60 - 1; i >= 0; i--) {
-        for (int j = 0; j < 60; j++) {
-            image[i][j] = false;
-        }
-    }
+    Pixel_t background_color = (Pixel_t) {
+        .r = 0, .g = 0, .b = 0, .alpha = MAX_OPACITY
+    };
+    Pixel_t forground_color = (Pixel_t) {
+        .r = MAX_COLOR, .g = 0, .b = 0, .alpha = MAX_OPACITY
+    };
 
+    // for each pixel in sensor
     for (int row = 0; row < n_rows; row++) {
         for (int col = 0; col < n_cols; col++) {
+            Image_set_pixel(img, background_color, row, col);
             Vector_t pixel_pos = get_pixel_pos(s, row, col);
             Ray_t r = get_ray(s, pixel_pos);
 
             // for each triangle
             for (int i = 0; i < s->count; i++) {
                 Triangle_t tri = s->triangles[i];
-                if (ray_hits_triangle(r, tri, 0, 1000)) {
-                    image[row][col] = true;
+                if (ray_hits_triangle(r, tri, 0, INFINITY)) {
+                    Image_set_pixel(img, forground_color, row, col);
                     break;
                 }
             }
         }
-    }
-
-    for (int i = 60 - 1; i >= 0; i--) {
-        for (int j = 0; j < 60; j++) {
-            if (image[i][j]) {
-                printf("1 ");
-            } else {
-                printf("0 ");
-            }
-        }
-        printf("\n");
     }
 }
