@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "pixel.h"
+#include "../includes/pixel.h"
 
 #define MAX_COLOR 255
 #define MAX_OPACITY 255

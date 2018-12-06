@@ -6,8 +6,11 @@ SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
-objects = main.o scene.o triangle.o vector.o matrix.o
+objects = main.o scene.o triangle.o vector.o matrix.o image.o pixel.o
 OBJS = $(addprefix $(OBJ_DIR)/, $(objects))
+
+default: main
+	$(BIN_DIR)/main
 
 # Build binary output
 main: $(OBJS)
@@ -30,6 +33,13 @@ $(OBJ_DIR)/vector.o: $(SRC_DIR)/vector.c $(INC_DIR)/vector.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/matrix.o: $(SRC_DIR)/matrix.c $(INC_DIR)/matrix.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+IMAGE_DEPS = $(addprefix $(INC_DIR)/, image.h pixel.h)
+$(OBJ_DIR)/image.o: $(SRC_DIR)/image.c $(IMAGE_DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/pixel.o: $(SRC_DIR)/pixel.c $(INC_DIR)/pixel.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clear the directories obj/ and bin/
