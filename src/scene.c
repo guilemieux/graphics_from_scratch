@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -46,14 +47,11 @@ Vector_t get_pixel_pos(Scene_t s, int x, int y)
 {
     // get u and v vectors that serve as a basis for camera
     Vector_t w = Vector_unit(Vector_neg(s->cam_dir));
-    double u_x;
-    if (w.x > 0) {
-        u_x = 1;
-    } else {
-        u_x = -1;
-    }
-    // TODO: Make the function do the real computation
-    Vector_t u = Vector_unit(Vector_new(0, 1, 0));
+    double root = sqrt(1.0 / (w.x * w.x + w.y * w.y));
+    double u_x = -w.y * root;
+    double u_y = w.x * root;
+    Vector_t u = Vector_unit(Vector_new(u_x, u_y, 0));
+    assert(Vector_dot(w, u) == 0.0);
     Vector_t v = Vector_unit(Vector_cross(w, u));
     
     // get center pixel
@@ -119,7 +117,7 @@ bool ray_hits_triangle(Ray_t r, Triangle_t tri, double t0, double t1)
 Scene_t Scene_new()
 {
     Scene_t s = malloc(sizeof(struct Scene_t));
-    s->cam_pos = Vector_scale(Vector_unit(Vector_new(1.0, 0.0, 0.0)), 5.0);
+    s->cam_pos = Vector_scale(Vector_unit(Vector_new(1.0, 1.0, 1.0)), 2.0);
     s->cam_dir = Vector_unit(Vector_neg(s->cam_pos));
     s->camera = (Camera_t) {
         .x_res = DEFAULT_RES,
