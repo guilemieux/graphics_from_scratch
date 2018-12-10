@@ -26,7 +26,7 @@ struct color get_color(int hex_color)
     return rgb(
         (RED_MASK & hex_color) >> RED_SHIFT,
         (GREEN_MASK & hex_color) >> GREEN_SHIFT,
-        BLUE_MASK & hex_color >> BLUE_SHIFT
+        (BLUE_MASK & hex_color) >> BLUE_SHIFT
     );
 }
 
