@@ -4,6 +4,7 @@ CFLAGS = -g -Wall
 INC_DIR = includes
 SRC_DIR = src
 OBJ_DIR = obj
+TEST_DIR = tests
 BIN_DIR = bin
 
 objects = main.o scene.o triangle.o vector.o matrix.o image.o pixel.o bmp.o
@@ -11,6 +12,11 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(objects))
 
 default: main
 	$(BIN_DIR)/main
+
+test: $(OBJ_DIR)/color.o 
+	$(CC) $(CFLAGS) $(TEST_DIR)/color_test.c $(OBJ_DIR)/color.o -o $(BIN_DIR)/$@
+	$(BIN_DIR)/test
+
 
 # Build binary output
 main: $(OBJS)
@@ -44,6 +50,9 @@ $(OBJ_DIR)/pixel.o: $(SRC_DIR)/pixel.c $(INC_DIR)/pixel.h
 
 BMP_DEPS = $(addprefix $(INC_DIR)/, bmp.h image.h)
 $(OBJ_DIR)/bmp.o: $(SRC_DIR)/bmp.c $(BMP_DEPS)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/color.o: $(SRC_DIR)/color.c $(INC_DIR)/color.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clear the directories obj/ and bin/
