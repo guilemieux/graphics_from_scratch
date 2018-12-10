@@ -28,7 +28,7 @@ bool test__compare_color__c1_smaller_than_c2()
 
 bool test__get_color__hex_input()
 {
-    struct color expected = RGB(66, 134, 244);
+    struct color expected = rgb(66, 134, 244);
     struct color result = get_color(0x4286F4);
     if (compare_color(result, expected) == 0) return true;
     return false;
@@ -36,7 +36,7 @@ bool test__get_color__hex_input()
 
 bool test__get_color__color_name_input()
 {
-    struct color expected = RGB(255, 0, 255);
+    struct color expected = rgb(255, 0, 255);
     struct color result = get_color(FUCHSIA);
     if (compare_color(result, expected) == 0) return true;
     return false;

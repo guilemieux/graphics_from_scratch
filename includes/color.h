@@ -1,11 +1,6 @@
 #ifndef _COLOR_H_
 #define _COLOR_H_
 
-#include <stdbool.h>
-
-#define RGB(red, green, blue) \
-    (struct color) {.r = red, .g = green, .b = blue}
-
 // Hexadecimal values of common colors
 #define WHITE   0xFFFFFF
 #define SILVER  0xC0C0C0
@@ -39,6 +34,9 @@ struct color {
     unsigned char b; // Intensity of blue
 };
 
+/** Helper function for a more readable way to create a color struct. */
+extern struct color rgb(unsigned char r, unsigned char g, unsigned char b);
+
 /**
  * Returns a color structure based on its hexadecimal representation. Since
  * the intensity of reg, green and blue of a color is an integer between 0 and
@@ -52,7 +50,8 @@ struct color {
  *                             RED    GREEN   BLUE
  * 
  * For example, 0xF0FF0F would correspond to the rgb triple (240, 255, 15)
- * because 0xF0 = 240, 0xFF = 255 and 0x0F = 15.
+ * because 0xF0 = 240, 0xFF = 255 and 0x0F = 15. This function is most useful
+ * when used with the defined common colors in this file (e.g. get_color(AQUA))
  * 
  * @param hex_color: The hexadecimal representation of the color.
  * @return: A color struct representing the hexadecimal value.
