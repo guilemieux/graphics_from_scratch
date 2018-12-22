@@ -84,7 +84,7 @@ static void write_row_padding(int padding_size, FILE *fp)
         fputc(0, fp);
 }
 
-static void write_bitmap(Bitmap_t *bitmap, FILE *fp)
+static void write_bitmap(Bitmap_t bitmap, FILE *fp)
 {
     int h = bitmap_height(bitmap);
     int w = bitmap_width(bitmap);
@@ -100,7 +100,7 @@ static void write_bitmap(Bitmap_t *bitmap, FILE *fp)
     }
 }
 
-void save_to_bmp(Bitmap_t *bitmap, const char *file_name)
+void save_to_bmp(Bitmap_t bitmap, const char *file_name)
 {
     int bits_per_pixel = BYTES_PER_PIXEL * BITS_PER_BYTE;
     int row_size = ((bits_per_pixel * bitmap_width(bitmap) + 31) / 32) * 4;

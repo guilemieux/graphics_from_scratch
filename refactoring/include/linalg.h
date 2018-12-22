@@ -5,31 +5,29 @@
 
 #define MATRIX_DIM 3
 
-#define VECTOR(a, b, c) \
-    (struct vector) { .x = a, .y = b, .z = c }
+#define VECTOR(x, y, z) \
+    (Vector) { x, y, z }
 
-struct vector
+typedef struct vector
 {
     double x;
     double y;
     double z;
-};
+} Vector;
 
-struct matrix
-{
-    double x[MATRIX_DIM][MATRIX_DIM];
-};
+typedef double Matrix[MATRIX_DIM][MATRIX_DIM];
 
-extern bool vec_equal(struct vector a, struct vector b);
-extern struct vector add_vec(struct vector a, struct vector b);
-extern struct vector diff_vec(struct vector a, struct vector b);
-extern struct vector neg_vec(struct vector v);
-extern struct vector scale_vec(double c, struct vector v);
-extern double norm(struct vector v);
-extern double dot_product(struct vector a, struct vector b);
-extern struct vector cross_product(struct vector a, struct vector b);
-extern struct vector unit_vec(struct vector v);
+extern bool vec_equal(Vector a, Vector b);
+extern Vector add_vec(Vector a, Vector b);
+extern Vector diff_vec(Vector a, Vector b);
+extern Vector neg_vec(Vector v);
+extern Vector scale_vec(double c, Vector v);
+extern double norm(Vector v);
+extern double dot_product(Vector a, Vector b);
+extern Vector cross_product(Vector a, Vector b);
+extern Vector unit_vec(Vector v);
 
-extern double det(struct matrix m);
+extern double det(Matrix m);
+extern void matrix_cpy(Matrix dest, Matrix src);
 
 #endif

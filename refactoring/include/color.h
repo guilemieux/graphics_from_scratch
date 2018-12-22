@@ -28,15 +28,15 @@
  * For example, the color black is represented by the triple (0, 0, 0) and the
  * color white is represented as the triple (255, 255, 255).
  */
-struct color
+typedef struct color
 {
     unsigned char r; // Intensity of red
     unsigned char g; // Intensity of green
     unsigned char b; // Intensity of blue
-};
+} Color;
 
 /** Helper function for a more readable way to create a color struct. */
-extern struct color rgb(unsigned char r, unsigned char g, unsigned char b);
+extern Color rgb(unsigned char r, unsigned char g, unsigned char b);
 
 /**
  * Returns a color structure based on its hexadecimal representation. Since
@@ -57,7 +57,7 @@ extern struct color rgb(unsigned char r, unsigned char g, unsigned char b);
  * @param hex_color: The hexadecimal representation of the color.
  * @return: A color struct representing the hexadecimal value.
  */
-extern struct color get_color(int hex_color);
+extern Color get_color(int hex_color);
 
 /**
  * Compares 2 colors using their hexadecimal representation. The function
@@ -67,6 +67,6 @@ extern struct color get_color(int hex_color);
  * @param c2: The second color to compare.
  * @return: The difference between the hex representation of c1 and c2.
  */
-extern int compare_color(struct color c1, struct color c2);
+extern int compare_color(Color c1, Color c2);
 
 #endif
